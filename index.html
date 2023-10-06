@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap" rel="stylesheet">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    body { 
+      background-color: hsl(218, 23%, 16%); 
+      font-size: 28px; font-family: 'Manrope', sans-serif; 
+      padding: 0;
+    }
+
+    .onlyButton {
+      position: relative;
+      top: -50px;
+      right: 3px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div>
+    <div style="background-color: hsl(217, 19%, 24%); text-align: center; margin-top: 150px; margin-bottom: 30px; margin-left: 400px; margin-right: 400px; padding-bottom: 40px; border-radius: 10px;">
+      <div style="color: hsl(150, 100%, 66%); letter-spacing: 3px; padding-top: 50px;">
+        ADVICE # <span id="idSpan">1</span>
+      </div>
+  
+      <p id="idParagraphe" style="color: white;">"L'espèce humaine est la seule qui sache qu'elle doit mourir. Si Dieu n'existait pas, il faudrait l'inventer."</p>
+      <img src="./images/pattern-divider-desktop.svg" alt="pattern divider desktop">
+    </div>
+    <div class="onlyButton">
+      <button id="idButton" style="background-color: hsl(150, 100%, 66%); margin-left: 660px; margin-right: 660px; border-radius: 20px; border: none;"> 
+        <img src="./images/icon-dice.svg" style="margin-left: 3px; margin-left: 3px; margin-top: 3px; margin-bottom: 3px; margin-right: 3px;" alt="icone dice">
+      </button>
+    </div>
+  </div>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">SOGAN Carmen</a>.
+  </div>
+  <script>
+    //fetch() permet de faire appel à une api
+    //Une fonction asynchrone renvoie toujours une promesse
+    //await est une fonction qui permet d'attendre la résolution d'une promesse, cela permet d'avoir le resultat de la fonction
+    //La methode json permet de convertir l'objet response en json compréhensible par javaScript
+    document.querySelector('#idButton').addEventListener('click', async () => {
+      await refreshCitations();
+      console.log("ffff");
+    });
+
+    async function refreshCitations() {
+      let fetchResult = await fetch(`https://api.adviceslip.com/advice?t=${new Date().getMilliseconds()}`);
+      let data = await fetchResult.json();
+      //console.log(data.slip.id);
+      //console.log(data.slip.advice);
+      document.querySelector('#idParagraphe').innerHTML = `"${data.slip.advice}"`;
+      document.querySelector('#idSpan').innerHTML = `${data.slip.id}`;
+    }
+  </script>
+</body>
+</html>
